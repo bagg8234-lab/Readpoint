@@ -32,6 +32,10 @@ Readpoint는 EPUB 기반 전자책을 읽으면서 스포일러 없이 등장인
 ### 파이프라인 성공 실행 (Gantt)
 ![성공 Gantt](./images/adf_success_gantt.png)
 
+## 🗄️ 데이터베이스 ERD
+
+![ERD](./images/ERD.png)
+
 ## 🖥️ 서비스 화면
 
 ### 랜딩 페이지
