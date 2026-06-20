@@ -53,40 +53,8 @@ Readpoint는 EPUB 기반 전자책을 읽으면서 스포일러 없이 등장인
 ### AI 독서 메이트
 ![AI](./images/fron_ai.png)
 
-### Admin 대시보드
-![대시보드](./images/front_dashboard.png)
-
-### Admin 도서 정보 검수
-![메타검수](./images/front_meta_review.png)
-
-## ☁️ Azure 인프라
-
-### Azure OpenAI 모델 배포
-![OpenAI](./images/open_ai.png)
-
-| 배포명 | 모델 | 용도 |
-|--------|------|------|
-| readpoint-gpt5 | gpt-5 | 캐릭터 추출 및 관계 분석 |
-| chat | gpt-4o-mini | AI 독서 메이트 RAG |
-| text-embedding | text-embedding-ada-002 | 벡터 임베딩 |
-
-### PostgreSQL Flexible Server
-![PostgreSQL](./images/postgressql.png)
-
-### Azure Web PubSub (실시간 알림)
-![PubSub](./images/pubsub.png)
-
-### Azure VM — Neo4j 호스팅
-![VM](./images/vm.png)
-
-### Logic App — 파이프라인 트리거
-![Logic App](./images/logic_app.png)
-
-### Azure Static Web Apps
-![Static Web](./images/adf_staticweb.png)
-
-### Azure APIM
-![APIM](./images/apim.png)
+### 관리자 흐름 (영상)
+추후 업로드 예정
 
 ## 🔧 트러블슈팅
 
