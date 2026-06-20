@@ -4,13 +4,7 @@
 
 ## 📌 프로젝트 개요
 
-| 항목 | 내용 |
-|------|------|
-| 개발 기간 | 2025.12 ~ 2026.06 |
-| 팀 구성 | 5인 (프론트엔드 1, 백엔드 2, 데이터 2) |
-| 담당 역할 | 프론트엔드 개발, Admin 대시보드, API 연동 |
-| 주관 기관 | 대한상공회의소 K디지털트레이닝 Microsoft Data School |
-| 배포 URL | https://lemon-rock-0f6c15500.7.azurestaticapps.net |
+Readpoint는 EPUB 기반 전자책을 읽으면서 스포일러 없이 등장인물 관계를 탐색할 수 있는 AI 독서 서비스입니다. 책을 읽는 현재 진도에 맞춰 인물 관계 그래프가 동적으로 업데이트되고, RAG 기반 AI 독서 메이트가 읽은 범위 내에서만 답변합니다. 관리자는 EPUB을 업로드하면 Azure ADF 파이프라인이 자동으로 캐릭터 추출·관계 분석·그래프 구축까지 처리합니다.
 
 ## 🎯 핵심 기능
 
@@ -141,9 +135,8 @@ ADF에서 PostgreSQL 접근 시 퍼블릭 IP 차단 이슈 → Managed VNet + Pr
 
 ## 👤 담당 작업
 
-- Google OAuth 리다이렉트 기반 인증 흐름 구현
-- Admin 대시보드 실제 API 연동 및 Application Insights 모니터링 화면 구현
-- WebSocket 기반 실시간 알림 연동 (Azure Web PubSub)
-- 인물 관계 그래프 뷰어 구현 (Graph.jsx)
-- Azure Static Web Apps CI/CD 배포 이슈 해결 (PHP 오탐, JWT_SECRET 누락)
-- insight-service, admin-service API 직접 구현
+- React 프론트엔드 전체 UI/UX 개발 (랜딩, 서재, 뷰어, 관계도, AI 독서 메이트)
+- Admin 대시보드 실제 API 연동 및 epub 업로드·도서 상태 파이프라인 UI 구현
+- Application Insights 연동 API 개발 및 실시간 모니터링 화면 구현
+- Azure Static Web Apps 배포
+- ADF 데이터 파이프라인 작업 참여 (캐릭터 추출·정규화)
