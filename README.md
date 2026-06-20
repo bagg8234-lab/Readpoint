@@ -88,6 +88,8 @@ ADF에서 PostgreSQL 접근 시 퍼블릭 IP 차단 이슈 → Managed VNet + Pr
 | [embedding-service](https://github.com/3dt-3rd-project-org/embedding-service) | RAG 임베딩 서비스 |
 | [function](https://github.com/3dt-3rd-project-org/function) | Azure Functions 파이프라인 |
 | [neo4j-data-pipeline](https://github.com/3dt-3rd-project-org/neo4j-data-pipeline) | Neo4j 그래프 DB 파이프라인 |
+| [webhook-service](https://github.com/3dt-3rd-project-org/webhook-service) | 웹훅 서비스 |
+| [metadatafunction](https://github.com/3dt-3rd-project-org/metadatafunction) | 메타데이터 파싱 함수 |
 
 ## 🛠️ 기술 스택
 
