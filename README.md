@@ -6,6 +6,18 @@
 
 Readpoint는 EPUB 기반 전자책을 읽으면서 스포일러 없이 등장인물 관계를 탐색할 수 있는 AI 독서 서비스입니다. 책을 읽는 현재 진도에 맞춰 인물 관계 그래프가 동적으로 업데이트되고, RAG 기반 AI 독서 메이트가 읽은 범위 내에서만 답변합니다. 관리자는 EPUB을 업로드하면 Azure ADF 파이프라인이 자동으로 캐릭터 추출·관계 분석·그래프 구축까지 처리합니다.
 
+**전체 파이프라인 흐름:**
+```
+[메타데이터 파싱]
+metadata_parser (epub 업로드 → 메타데이터 추출)
+↓
+[1차 파이프라인 - 캐릭터 추출 및 관계 분석]
+chapter_split → openai_extract → normalize_characters → save_normalized_analysis → book_graph_refine
+↓
+[2차 파이프라인 - 요약 생성]
+migrate_graph → generate_progress_summary
+```
+
 ## 🎯 핵심 기능
 
 - **스포일러 방지**: 현재 읽은 챕터 범위 내에서만 AI가 답변
@@ -92,7 +104,7 @@ ForEach Batch Count 20 → 1 → 3 순차 조정으로 Rate Limit 해소
 
 ADF에서 PostgreSQL 접근 시 퍼블릭 IP 차단 이슈 → Managed VNet + Private Endpoint 구성으로 해결
 
-### 🔄 Airflow DAG 마이그레이션 (개인 실습)
+## 🔄 Airflow DAG 마이그레이션 (개인 실습)
 
 프로젝트 완료 후 ADF 파이프라인을 Apache Airflow DAG로 개인적으로 재설계했습니다.
 
@@ -103,22 +115,24 @@ ADF에서 PostgreSQL 접근 시 퍼블릭 IP 차단 이슈 → Managed VNet + Pr
     - XCom으로 태스크 간 books_id 전달
     - 실패 태스크만 선택적 재실행 가능
 
-자세한 내용은 [Velog 시리즈](https://velog.io/@rldnjs0906/series/Azure-Data-Factory-%EC%93%B0%EA%B3%A0-Airflow%EB%A1%9C-%EB%84%98%EC%96%B4%EA%B0%84-%EC%9D%B4%EC%9C%A0) 참고
+- **레포**: [readpoint-airflow](https://github.com/bagg8234-lab/readpoint-airflow)
+- **Velog 시리즈**: [ADF에서 Airflow로](https://velog.io/@rldnjs0906/series/Azure-Data-Factory-%EC%93%B0%EA%B3%A0-Airflow%EB%A1%9C-%EB%84%98%EC%96%B4%EA%B0%84-%EC%9D%B4%EC%9C%A0)
 
 ## 📁 레포지토리 구성
 
 | 레포 | 설명 |
 |------|------|
-| [readpoint-frontend](https://github.com/3dt-3rd-project-org/readpoint-frontend) | React 기반 프론트엔드 |
-| [admin-service](https://github.com/3dt-3rd-project-org/admin-service) | 관리자 대시보드 |
+| [metadatafunction](https://github.com/3dt-3rd-project-org/metadatafunction) | 메타데이터 파싱 함수 |
 | [insight-service](https://github.com/3dt-3rd-project-org/insight-service) | Application Insights 모니터링 |
 | [reader-service](https://github.com/3dt-3rd-project-org/reader-service) | 도서 조회 서비스 |
 | [auth-service](https://github.com/3dt-3rd-project-org/auth-service) | 인증 서비스 |
 | [embedding-service](https://github.com/3dt-3rd-project-org/embedding-service) | RAG 임베딩 서비스 |
+| [admin-service](https://github.com/3dt-3rd-project-org/admin-service) | 관리자 대시보드 |
+| [webhook-service](https://github.com/3dt-3rd-project-org/webhook-service) | 웹훅 서비스 |
 | [function](https://github.com/3dt-3rd-project-org/function) | Azure Functions 파이프라인 |
 | [neo4j-data-pipeline](https://github.com/3dt-3rd-project-org/neo4j-data-pipeline) | Neo4j 그래프 DB 파이프라인 |
-| [webhook-service](https://github.com/3dt-3rd-project-org/webhook-service) | 웹훅 서비스 |
-| [metadatafunction](https://github.com/3dt-3rd-project-org/metadatafunction) | 메타데이터 파싱 함수 |
+| [readpoint-frontend](https://github.com/3dt-3rd-project-org/readpoint-frontend) | React 기반 프론트엔드 |
+| [readpoint-airflow](https://github.com/bagg8234-lab/readpoint-airflow) | Airflow DAG 마이그레이션 (개인 실습) |
 
 ## 🛠️ 기술 스택
 
