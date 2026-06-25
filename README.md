@@ -22,12 +22,24 @@ Readpoint는 EPUB 기반 전자책을 읽으면서 스포일러 없이 등장인
 ### 1차 파이프라인 — 캐릭터 추출 및 관계 분석
 ![1차 파이프라인](./images/1차_파이프라인.png)
 
-`chapter_split` → `get_chapters` → ForEach `openai_extract` → `normalize_characters` → `book_graph_refine`
+`chapter_split` → `get_chapters` → ForEach `openai_extract` → `normalize_characters` → `save_normalized_analysis` → `book_graph_refine`
 
 ### 2차 파이프라인 — 독서 진행 요약 생성
 ![2차 파이프라인](./images/2차_파이프라인.png)
 
 `migrate_graph_endpoint` → `get_progress_events` → ForEach `generate_progress_summary`
+
+#### 파이프라인 성능 결과 (최종 적용: ForEach 병렬처리 최대 3)
+
+| 책 제목   | 챕터 수 | 문단 수 | 전체 시간   | 비용      |
+| ------ | ---- | ---- | ------- | ------- |
+| 어머니와 딸 | 6    | 1861 | 11m 29s | 약 1300원 |
+| 선화공주   | 5    | 744  | 8m 58s  | 약 800원  |
+| 순정해협   | 7    | 1708 | 9m 51s  | 약 1400원 |
+| 거리의 목가 | 12   | 663  | 11m 45s | 약 1900원 |
+| 꿈      | 22   | 947  | 20m 11s | 약 3600원 |
+| 흙      | 5    | 6304 | 8m 10s  | 약 1500원 |
+
 
 ### 파이프라인 성공 실행 (Gantt)
 ![성공 Gantt](./images/adf_success_gantt.png)
@@ -80,6 +92,19 @@ ForEach Batch Count 20 → 1 → 3 순차 조정으로 Rate Limit 해소
 
 ADF에서 PostgreSQL 접근 시 퍼블릭 IP 차단 이슈 → Managed VNet + Private Endpoint 구성으로 해결
 
+### 🔄 Airflow DAG 마이그레이션 (개인 실습)
+
+프로젝트 완료 후 ADF 파이프라인을 Apache Airflow DAG로 개인적으로 재설계했습니다.
+
+- **환경**: Docker + Airflow 2.10.5 (로컬)
+- **DAG**: `dags/readpoint_dag.py`
+- **주요 변경점**:
+    - ADF ForEach → Python for 루프로 구현
+    - XCom으로 태스크 간 books_id 전달
+    - 실패 태스크만 선택적 재실행 가능
+
+자세한 내용은 [Velog 시리즈](https://velog.io/@rldnjs0906/series/Azure-Data-Factory-%EC%93%B0%EA%B3%A0-Airflow%EB%A1%9C-%EB%84%98%EC%96%B4%EA%B0%84-%EC%9D%B4%EC%9C%A0) 참고
+
 ## 📁 레포지토리 구성
 
 | 레포 | 설명 |
@@ -106,11 +131,13 @@ ADF에서 PostgreSQL 접근 시 퍼블릭 IP 차단 이슈 → Managed VNet + Pr
 | Realtime | Azure Web PubSub |
 | Monitoring | Azure Application Insights |
 | Infra | Azure VM (Ubuntu 24.04), Docker, Managed VNet |
+| Orchestration | Azure ADF, Apache Airflow |
 
 ## 👤 담당 작업
 
 - React 프론트엔드 전체 UI/UX 개발 (랜딩, 서재, 뷰어, 관계도, AI 독서 메이트)
 - Admin 대시보드 실제 API 연동 및 epub 업로드·도서 상태 파이프라인 UI 구현
 - Application Insights 연동 API 개발 및 실시간 모니터링 화면 구현
-- Azure Static Web Apps 배포
+- LLM 기반 AI 독서 메이트 기능 개발 (Query Rewriting, 스포일러 필터링)
 - ADF 데이터 파이프라인 작업 참여 (캐릭터 추출·정규화)
+- ADF 파이프라인을 Airflow DAG로 재설계 (Docker 로컬 환경 구축, XCom/ForEach 구현)
