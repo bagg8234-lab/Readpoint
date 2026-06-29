@@ -6,7 +6,7 @@
 
 ## 📌 Project Overview
 
-Readpoint is an AI reading service that allows users to explore character relationships without spoilers while reading EPUB-based e-books. The character relationship graph dynamically updates based on the user's current reading progress, and the RAG-based AI reading companion answers questions strictly within the read range. Administrators can upload an EPUB and the Azure ADF pipeline automatically handles character extraction, relationship analysis, and graph construction.
+Built to solve a common reader pain point — existing character guides and summaries inevitably expose spoilers. Readpoint processes EPUB files through an automated Azure pipeline, extracting characters, analyzing relationships, and building a dynamic graph scoped to the user's current reading progress. The RAG-based AI reading companion also answers strictly within the read range. Administrators can upload an EPUB and the pipeline handles everything automatically.
 
 **Full Pipeline Flow:**
 ```
