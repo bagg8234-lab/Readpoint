@@ -1,3 +1,5 @@
+[🇰🇷 한국어](./README.md) | [🇺🇸 English](./README_EN.md)
+
 # Readpoint — Book Relationship Visualization Service
 
 > A RAG-based reading service that visualizes character relationships without spoilers
